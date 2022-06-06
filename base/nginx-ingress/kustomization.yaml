@@ -4,10 +4,9 @@ generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:
 - name: nginx-values
-  namespace: ingress
+  namespace: flux-system
   files:
   - values.yaml
 resources:
-- namespace-ingress.yaml
 - helm-ingress-nginx-repo.yaml
 - helm-ingress-nginx-release.yaml
