@@ -8,5 +8,6 @@ configMapGenerator:
   files:
   - values.yaml
 resources:
+- namespace-ingress.yaml
 - helm-ingress-nginx-repo.yaml
 - helm-ingress-nginx-release.yaml
