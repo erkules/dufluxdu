@@ -662,6 +662,7 @@ grafana:
 
   sidecar:
     dashboards:
+      searchNamespace: ALL
       enabled: true
       label: grafana_dashboard
       labelValue: "1"
