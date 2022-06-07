@@ -23,4 +23,4 @@ spec:
       retries: 7
   valuesFrom:
   - kind: ConfigMap
-    name: prometheus-values
+    name: prometheus_values
