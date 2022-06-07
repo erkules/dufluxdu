@@ -201,31 +201,10 @@ alertmanager:
   ##      https://prometheus.io/docs/alerting/notification_examples/
   ##
   templateFiles: {}
-  #
-  ## An example template:
-  #   template_1.tmpl: |-
-  #       {{ define "cluster" }}{{ .ExternalURL | reReplaceAll ".*alertmanager\\.(.*)" "$1" }}{{ end }}
-  #
-  #       {{ define "slack.myorg.text" }}
-  #       {{- $root := . -}}
-  #       {{ range .Alerts }}
-  #         *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
-  #         *Cluster:* {{ template "cluster" $root }}
-  #         *Description:* {{ .Annotations.description }}
-  #         *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
-  #         *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
-  #         *Details:*
-  #           {{ range .Labels.SortedPairs }} - *{{ .Name }}:* `{{ .Value }}`
-  #           {{ end }}
-  #       {{ end }}
-  #       {{ end }}
 
   ingress:
     enabled: false
 
-    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
 
     annotations: {}
 
@@ -270,39 +249,14 @@ alertmanager:
     annotations: {}
     labels: {}
 
-    ## Final form of the hostname for each per replica ingress is
-    ## {{ ingressPerReplica.hostPrefix }}-{{ $replicaNumber }}.{{ ingressPerReplica.hostDomain }}
-    ##
-    ## Prefix for the per replica ingress that will have `-$replicaNumber`
-    ## appended to the end
-    hostPrefix: ""
-    ## Domain that will be used for the per replica ingress
-    hostDomain: ""
-
-    ## Paths to use for ingress rules
-    ##
     paths: []
-    # - /
-
-    ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
-    ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-    # pathType: ImplementationSpecific
-
-    ## Secret name containing the TLS certificate for alertmanager per replica ingress
-    ## Secret must be manually created in the namespace
     tlsSecretName: ""
 
-    ## Separated secret for each per replica Ingress. Can be used together with cert-manager
     ##
     tlsSecretPerReplica:
       enabled: false
-      ## Final form of the secret for each per replica ingress is
-      ## {{ tlsSecretPerReplica.prefix }}-{{ $replicaNumber }}
-      ##
       prefix: "alertmanager"
 
-  ## Configuration for Alertmanager service
-  ##
   service:
     annotations: {}
     labels: {}
@@ -400,12 +354,6 @@ alertmanager:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
     relabelings: []
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
   ## Settings affecting alertmanagerSpec
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#alertmanagerspec
@@ -644,9 +592,6 @@ alertmanager:
     # name: ""
     annotations: {}
     data: {}
-  #   auth: |
-  #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
-  #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
 
 ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
 ##
@@ -813,12 +758,6 @@ grafana:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
     relabelings: []
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 ## Component scraping the kube api server
 ##
@@ -901,86 +840,22 @@ kubelet:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
     cAdvisorMetricRelabelings: []
-    # - sourceLabels: [__name__, image]
-    #   separator: ;
-    #   regex: container_([a-z_]+);
-    #   replacement: $1
-    #   action: drop
-    # - sourceLabels: [__name__]
-    #   separator: ;
-    #   regex: container_(network_tcp_usage_total|network_udp_usage_total|tasks_state|cpu_load_average_10s)
-    #   replacement: $1
-    #   action: drop
-
-    ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
     probesMetricRelabelings: []
-    # - sourceLabels: [__name__, image]
-    #   separator: ;
-    #   regex: container_([a-z_]+);
-    #   replacement: $1
-    #   action: drop
-    # - sourceLabels: [__name__]
-    #   separator: ;
-    #   regex: container_(network_tcp_usage_total|network_udp_usage_total|tasks_state|cpu_load_average_10s)
-    #   replacement: $1
-    #   action: drop
-
-    ## RelabelConfigs to apply to samples before scraping
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
-    ## metrics_path is required to match upstream rules and charts
     cAdvisorRelabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
-    ## RelabelConfigs to apply to samples before scraping
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
     probesRelabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
-
-    ## RelabelConfigs to apply to samples before scraping
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
     resourceRelabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
     ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
     metricRelabelings: []
-    # - sourceLabels: [__name__, image]
-    #   separator: ;
-    #   regex: container_([a-z_]+);
-    #   replacement: $1
-    #   action: drop
-    # - sourceLabels: [__name__]
-    #   separator: ;
-    #   regex: container_(network_tcp_usage_total|network_udp_usage_total|tasks_state|cpu_load_average_10s)
-    #   replacement: $1
-    #   action: drop
 
     ## RelabelConfigs to apply to samples before scraping
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
@@ -989,12 +864,6 @@ kubelet:
     relabelings:
       - sourceLabels: [__metrics_path__]
         targetLabel: metrics_path
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 ## Component scraping the kube controller manager
 ##
@@ -1056,10 +925,6 @@ kubeControllerManager:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 ## Component scraping coreDns. Use either this or kubeDns
 ##
@@ -1093,10 +958,6 @@ coreDns:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 ## Component scraping kubeDns. Use either this or coreDns
 ##
@@ -1134,10 +995,6 @@ kubeDns:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
     ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
@@ -1153,10 +1010,6 @@ kubeDns:
     dnsmasqRelabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 ## Component scraping etcd
 ##
@@ -1219,10 +1072,6 @@ kubeEtcd:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 
 ## Component scraping kube scheduler
@@ -1283,10 +1132,6 @@ kubeScheduler:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
 
 ## Component scraping kube proxy
@@ -1386,10 +1231,6 @@ kube-state-metrics:
       relabelings: []
       # - sourceLabels: [__meta_kubernetes_pod_node_name]
       #   separator: ;
-      #   regex: ^(.*)$
-      #   targetLabel: nodename
-      #   replacement: $1
-      #   action: replace
 
   selfMonitor:
     enabled: false
@@ -1437,8 +1278,6 @@ prometheus-node-exporter:
       # - sourceLabels: [__name__]
       #   separator: ;
       #   regex: ^node_mountstats_nfs_(event|operations|transport)_.+
-      #   replacement: $1
-      #   action: drop
 
       ## RelabelConfigs to apply to samples before scraping
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
@@ -1446,10 +1285,6 @@ prometheus-node-exporter:
       relabelings: []
       # - sourceLabels: [__meta_kubernetes_pod_node_name]
       #   separator: ;
-      #   regex: ^(.*)$
-      #   targetLabel: nodename
-      #   replacement: $1
-      #   action: replace
   rbac:
     ## If true, create PSPs for node-exporter
     ##
@@ -1637,10 +1472,6 @@ prometheusOperator:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
 
   ## Resource limits & requests
   ##
@@ -1772,9 +1603,7 @@ prometheus:
 
   # Service for thanos service discovery on sidecar
   # Enable this can make Thanos Query can use
-  # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
   # Thanos sidecar on prometheus nodes
-  # (Please remember to change ${kube-prometheus-stack.fullname} and ${namespace}. Not just copy and paste!)
   thanosService:
     enabled: false
     annotations: {}
@@ -1994,8 +1823,6 @@ prometheus:
     annotations: {}
     data: {}
   #   auth: |
-  #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
-  #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
 
   ingress:
     enabled: true
@@ -2044,9 +1871,7 @@ prometheus:
     labels: {}
 
     ## Final form of the hostname for each per replica ingress is
-    ## {{ ingressPerReplica.hostPrefix }}-{{ $replicaNumber }}.{{ ingressPerReplica.hostDomain }}
     ##
-    ## Prefix for the per replica ingress that will have `-$replicaNumber`
     ## appended to the end
     hostPrefix: ""
     ## Domain that will be used for the per replica ingress
@@ -2070,7 +1895,6 @@ prometheus:
     tlsSecretPerReplica:
       enabled: false
       ## Final form of the secret for each per replica ingress is
-      ## {{ tlsSecretPerReplica.prefix }}-{{ $replicaNumber }}
       ##
       prefix: "prometheus"
 
@@ -2108,9 +1932,7 @@ prometheus:
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
-    #   regex: ^(.*)$
     #   targetLabel: nodename
-    #   replacement: $1
     #   action: replace
 
   ## Settings affecting prometheusSpec
@@ -2482,51 +2304,6 @@ prometheus:
     ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
     ##
     additionalScrapeConfigs: []
-    # - job_name: kube-etcd
-    #   kubernetes_sd_configs:
-    #     - role: node
-    #   scheme: https
-    #   tls_config:
-    #     ca_file:   /etc/prometheus/secrets/etcd-client-cert/etcd-ca
-    #     cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
-    #     key_file:  /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
-    #   relabel_configs:
-    #   - action: labelmap
-    #     regex: __meta_kubernetes_node_label_(.+)
-    #   - source_labels: [__address__]
-    #     action: replace
-    #     targetLabel: __address__
-    #     regex: ([^:;]+):(\d+)
-    #     replacement: ${1}:2379
-    #   - source_labels: [__meta_kubernetes_node_name]
-    #     action: keep
-    #     regex: .*mst.*
-    #   - source_labels: [__meta_kubernetes_node_name]
-    #     action: replace
-    #     targetLabel: node
-    #     regex: (.*)
-    #     replacement: ${1}
-    #   metric_relabel_configs:
-    #   - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
-    #     action: labeldrop
-    #
-    ## If scrape config contains a repetitive section, you may want to use a template.
-    ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
-    # additionalScrapeConfigs: |
-    #  - job_name: "node-exporter"
-    #    gce_sd_configs:
-    #    {{range $zone := .Values.gcp_zones}}
-    #    - project: "project1"
-    #      zone: "{{$zone}}"
-    #      port: 9100
-    #    {{end}}
-    #    relabel_configs:
-    #    ...
-
-
-    ## If additional scrape configurations are already deployed in a single secret file you can use this section.
-    ## Expected values are the secret name and key
-    ## Cannot be used with additionalScrapeConfigs
     additionalScrapeConfigsSecret: {}
       # enabled: false
       # name:
@@ -2568,15 +2345,7 @@ prometheus:
     ## configs are going to break Prometheus after the upgrade.
     ##
     additionalAlertRelabelConfigs: []
-    # - separator: ;
-    #   regex: prometheus_replica
-    #   replacement: $1
-    #   action: labeldrop
 
-    ## If additional alert relabel configurations are already deployed in a single secret, or you want to manage
-    ## them separately from the helm deployment, you can use this section.
-    ## Expected values are the secret name and key
-    ## Cannot be used with additionalAlertRelabelConfigs
     additionalAlertRelabelConfigsSecret: {}
       # name:
       # key:
@@ -2605,12 +2374,6 @@ prometheus:
       #   provider: gcp
       #   parameters:
       #     secrets: |
-      #       - resourceName: "projects/$PROJECT_ID/secrets/testsecret/versions/latest"
-      #         fileName: "objstore.yaml"
-      # objectStorageConfigFile: /var/secrets/object-store.yaml
-
-    ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to a Prometheus pod.
-    ## if using proxy extraContainer update targetPort with proxy container port
     containers: []
 
     ## InitContainers allows injecting additional initContainers. This is meant to allow doing some changes
