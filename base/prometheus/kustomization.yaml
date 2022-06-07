@@ -3,10 +3,10 @@ kind: Kustomization
 generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:
-- name: nginx-values
+- name: prometheus-values
   namespace: flux-system
   files:
   - values.yaml
 resources:
-- helm-ingress-nginx-repo.yaml
-- helm-ingress-nginx-release.yaml
+- prometheus-release.yaml  
+- prometheus.repo.yaml
