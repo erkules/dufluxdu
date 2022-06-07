@@ -234,7 +234,7 @@ alertmanager:
     ## Hosts must be provided if Ingress is enabled.
     ##
     hosts:
-    - alertmanager.${clustername}.zwerk.org
+      - alertmanager.${clustername}.zwerk.org
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
     ##
