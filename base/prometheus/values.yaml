@@ -702,7 +702,7 @@ grafana:
     ## Must be provided if Ingress is enable.
     ##
     hosts:
-      - grafana.${clustername}.zwerk.org
+      - grafana.${clusternamee}.zwerk.org
 
     ## Path for grafana ingress
     path: /
@@ -2011,7 +2011,7 @@ prometheus:
     ## Must be provided if Ingress is enabled.
     ##
     hosts:
-      - prometheus.${clustername}.zwerk.org
+      - prometheus.${clusternamee}.zwerk.org
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
     ##
