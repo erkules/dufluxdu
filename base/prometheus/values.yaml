@@ -234,7 +234,7 @@ alertmanager:
     ## Hosts must be provided if Ingress is enabled.
     ##
     hosts:
-    - alertmanager.${clustername:=undefined}.zwerk.org
+    - alertmanager.${clustername}.zwerk.org
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
     ##
@@ -703,7 +703,7 @@ grafana:
     ## Must be provided if Ingress is enable.
     ##
     hosts:
-      - grafana.${clustername:=undefined}.zwerk.org
+      - grafana.${clustername}.zwerk.org
 
     ## Path for grafana ingress
     path: /
@@ -2012,7 +2012,7 @@ prometheus:
     ## Must be provided if Ingress is enabled.
     ##
     hosts:
-      - prometheus.${clustername:=default}.zwerk.org
+      - prometheus.${clustername}.zwerk.org
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
     ##
