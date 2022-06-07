@@ -1,0 +1,12 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name:  kyverno-policy-reporter
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  timeout: 1m0s
+  url: https://kyverno.github.io/policy-reporter
+
+
