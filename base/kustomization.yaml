@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - kyverno
 - nginx-ingress
-  #- prometheus
+- prometheus
