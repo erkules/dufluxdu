@@ -6,4 +6,3 @@ resources:
 - nginx-ingress
 - prometheus
 - flux-monitoring
-- loki
