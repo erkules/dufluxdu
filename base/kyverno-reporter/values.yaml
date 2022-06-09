@@ -163,7 +163,7 @@ existingTargetConfig:
 target:
   loki:
     # loki host address
-    host: ""
+    host: "http://loki.loki:3100"
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to loki
