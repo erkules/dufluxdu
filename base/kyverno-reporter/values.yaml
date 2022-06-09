@@ -169,7 +169,7 @@ target:
     # list of sources which should send to loki
     sources: []
     # Skip already existing PolicyReportResults on startup
-    skipExistingOnStartup: true
+    skipExistingOnStartup: false
     # Added as additional labels to each Loki event
     customLabels: {}
     # Filter Results which should send to this target by namespaces, priorities or policies
