@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: clusterpolicy-generate-namespace
+spec:
+  rules:
+  - name: clusterpolicy-generate-namespace
+    match:
+      resources:
+        kinds:
+        - Namespace
+        namespaces:
+        - "k8s-*"
+        - "docker*"
+    generate:
+      synchronize: true
+      kind: RoleBinding
+      apiVersion: rbac.authorization.k8s.io
+      name: kubernetescamp
+      namespace:  "{{request.object.metadata.name}}"
+      data:
+         subjects:
+         - kind: User
+           name: "{{request.object.metadata.name}}"
+         roleRef:
+           kind: ClusterRole
+           name: admin 
+           apiGroup: rbac.authorization.k8s.io
+        
