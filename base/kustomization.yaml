@@ -4,6 +4,6 @@ resources:
 - kyverno
 - kyverno-reporter
 - nginx-ingress
-- prometheus
+- prometheus.yaml
 - flux-monitoring
-- loki
+- loki.yaml
