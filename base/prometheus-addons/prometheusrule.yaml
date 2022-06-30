@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+  name: k8sworkshop.rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: k8sworkshop.rules
+    rules:
+    - alert: k8sworkshopPendingPods
+      annotations: 
+        description: Im Namespace {{ $labels.namespace }} sind im Deployment {{ $labels.deployment }} ganze {{ $value }} nicht ausgerollt
+        summary: There are some Pods pending
+      expr: |-
+        kube_deployment_status_replicas_unavailable>0
+      for:  1m
+      labels:
+        serverity: k8sworkshop
+    - expr: |-
+        increase(kube_pod_container_status_restarts_total[5m])>2
+      alert: 'k8sworkshopToMannyRestarts'
+      annotations: 
+        description: Im Namespace {{ $labels.namespace }} hat der Pod {{ $labels.pod }} ganze {{ $value }} restarts
+        summary: Some Pods have quita lot of restarts
+        
+      labels:
+        serverity: k8sworkshop

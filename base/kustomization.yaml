@@ -7,3 +7,4 @@ resources:
 - prometheus.yaml
 - flux-monitoring.yaml
 - loki.yaml
+- prometheus-addons.yaml
