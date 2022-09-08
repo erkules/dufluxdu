@@ -8,3 +8,4 @@ resources:
 - flux-monitoring.yaml
 - loki.yaml
 - prometheus-addons.yaml
+- keda
