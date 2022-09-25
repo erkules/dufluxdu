@@ -11,6 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: certmanager
+      version: "v1.9.1"
   interval: 1m0s
   targetNamespace: cert-manager
   releaseName: cert-manager
