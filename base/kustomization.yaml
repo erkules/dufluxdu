@@ -9,3 +9,4 @@ resources:
 - loki.yaml
 - prometheus-addons.yaml
 - cert-manager
+- keda
