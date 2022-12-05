@@ -15,7 +15,7 @@ spec:
     generate:
       synchronize: true
       kind: RoleBinding
-      apiVersion: rbac.authorization.k8s.io
+      apiVersion: rbac.authorization.k8s.io/v1
       name: kubernetescamp
       namespace:  "{{request.object.metadata.name}}"
       data:

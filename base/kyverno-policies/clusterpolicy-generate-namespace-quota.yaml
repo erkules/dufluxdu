@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: clusterpolicy-generate-namespace-quota
+spec:
+  rules:
+  - name: clusterpolicy-generate-namespace-quota
+    match:
+      resources:
+        kinds:
+        - Namespace
+        namespaces:
+        - "k8s-*"
+        - "docker*"
+    generate:
+      synchronize: true
+      kind: ResourceQuota
+      apiVersion: v1
+      name: generated-quota
+      namespace:  "{{request.object.metadata.name}}"
+      data:
+        hard:
+          pods: 10
+          configmaps: 5
+          services: 4
+          persistentvolumeclaims: 2
+          default.storageclass.storage.k8s.io/requests.storage: 500Gi
