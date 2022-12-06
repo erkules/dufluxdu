@@ -2,13 +2,10 @@ image:
   registry: ghcr.io
   repository: kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.6.0
+  tag: 2.10.4
 
 imagePullSecrets: []
 
-# Deploy not more than one replica
-# Policy Reporter doesn't scale yet.
-# Each pod will report each change.
 replicaCount: 1
 
 deploymentStrategy: {}
@@ -109,6 +106,9 @@ metrics:
 #    status:
 #      exclude: ["pass", "skip"]
 
+profiling:
+  enabled: false
+
 # Filter PolicyReport resources to process
 reportFilter:
   namespaces:
@@ -141,6 +141,8 @@ global:
   backend: ""
   # overwrite the fullname of all resources including subcharts
   fullnameOverride: ""
+  # configure the namespace of all resources including subcharts
+  namespace: ""
   # additional labels added on each resource
   labels: {}
 
@@ -150,6 +152,70 @@ global:
 #   default: warning
 #   require-ns-labels: error
 policyPriorities: {}
+
+emailReports:
+  clusterName: "" # (optional) - displayed in the email report if configured
+  smtp:
+    secret: "" # (optional) secret name to provide the complete or partial SMTP configuration
+    host: ""
+    port: 465
+    username: ""
+    password: ""
+    from: "" # displayed from email address
+    encryption: "" # default is none, supports ssl/tls and starttls
+
+  # basic summary report
+  summary:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
+  # violation summary report
+  violations:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
 
 # Reference a configuration which already exists instead of creating one
 existingTargetConfig:
@@ -169,7 +235,7 @@ target:
     # list of sources which should send to loki
     sources: []
     # Skip already existing PolicyReportResults on startup
-    skipExistingOnStartup: false
+    skipExistingOnStartup: true
     # Added as additional labels to each Loki event
     customLabels: {}
     # Filter Results which should send to this target by namespaces, priorities or policies
@@ -193,8 +259,19 @@ target:
   elasticsearch:
     # elasticsearch host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
     # elasticsearch index (default: policy-reporter)
     index: ""
+    # elasticsearch username für HTTP Basic Auth
+    username: ""
+    # elasticsearch password für HTTP Basic Auth
+    password: ""
+    # receive the host, username and/or password from an existing secret instead
+    secretRef: ""
     # elasticsearch index rotation and index suffix
     # possible values: daily, monthly, annually, none (default: daily)
     rotation: ""
@@ -204,6 +281,8 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Added as additional properties to each elasticsearch event
+    customFields: {}
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional elasticsearch channels with different configurations and filters
@@ -212,12 +291,16 @@ target:
   slack:
     # slack app webhook address
     webhook: ""
+    # receive the webhook from an existing secret instead
+    secretRef: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to slack
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Added as additional fields to each Slack event
+    customFields: {}
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional slack channels with different configurations and filters
@@ -239,6 +322,8 @@ target:
   discord:
     # discord app webhook address
     webhook: ""
+    # receive the webhook from an existing secret instead
+    secretRef: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to discord
@@ -253,6 +338,13 @@ target:
   teams:
     # teams webhook address
     webhook: ""
+    # receive the webhook from an existing secret instead
+    secretRef: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to teams
@@ -267,6 +359,11 @@ target:
   ui:
     # ui host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: "warning"
     # list of sources which should send to the UI Log
@@ -277,6 +374,13 @@ target:
   webhook:
     # webhook host address
     host: ""
+    # path to your custom certificate
+    # can be added under extraVolumes
+    certificate: ""
+    # skip TLS verification if necessary
+    skipTLS: false
+    # receive the host and/or token from an existing secret, the token is added as Authorization header
+    secretRef: ""
     # additional http headers
     headers: {}
     # minimum priority "" < info < warning < critical < error
@@ -285,6 +389,8 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Added as additional properties to each webhook event
+    customFields: {}
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional webhook channels with different configurations and filters
@@ -295,12 +401,16 @@ target:
     accessKeyID: ""
     # S3 secret access key
     secretAccessKey: ""
+    # receive the accessKeyID and/or secretAccessKey from an existing secret instead
+    secretRef: ""
     # S3 storage region
     region: ""
     # S3 storage endpoint
     endpoint: ""
     # S3 storage, bucket name
     bucket: ""
+    # S3 storage, force path style configuration
+    pathStyle: false
     # name of prefix, keys will have format: s3://<bucket>/<prefix>/YYYY-MM-DD/YYYY-MM-DDTHH:mm:ss.s+01:00.json
     prefix: ""
     # minimum priority "" < info < warning < critical < error
@@ -309,10 +419,66 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Added as additional properties to each s3 event
+    customFields: {}
     # filter results send by namespaces, policies and priorities
     filter: {}
     # add additional s3 channels with different configurations and filters
     channels: []
+
+  kinesis:
+    # AWS access key
+    accessKeyID: ""
+    # AWS secret access key
+    secretAccessKey: ""
+    # receive the accessKeyID and/or secretAccessKey from an existing secret instead
+    secretRef: ""
+    # AWS region
+    region: ""
+    # AWS Kinesis endpoint
+    endpoint: ""
+    # AWS Kinesis stream name
+    streamName: ""
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to S3
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # Added as additional properties to each kinesis event
+    customFields: {}
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional s3 channels with different configurations and filters
+    channels: []
+
+# required when policy-reporter runs in HA mode and you have targets configured
+# if no targets are configured, leaderElection is disabled automatically
+# will be enabled when replicaCount > 1
+leaderElection:
+  enabled: false
+  releaseOnCancel: true
+  leaseDuration: 15
+  renewDeadline: 10
+  retryPeriod: 2
+
+# use redis as external result cache instead of the in memory cache
+redis:
+  enabled: false
+  address: ""
+  database: 0
+  prefix: "policy-reporter"
+  username: ""
+  password: ""
+
+# enabled if replicaCount > 1
+podDisruptionBudget:
+  # -- Configures the minimum available pods for policy-reporter disruptions.
+  # Cannot be used if `maxUnavailable` is set.
+  minAvailable: 1
+  # -- Configures the maximum unavailable pods for policy-reporter disruptions.
+  # Cannot be used if `minAvailable` is set.
+  maxUnavailable:
 
 # Node labels for pod assignment
 # ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -336,4 +502,9 @@ readinessProbe:
   httpGet:
     path: /healthz
     port: http
+
+extraVolumes:
+  volumeMounts: []
+
+  volumes: []
 
