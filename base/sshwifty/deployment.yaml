@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sshwifty
+  namespace: sshwifty
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  replicas: 1
+  minReadySeconds: 4
+  selector:
+    matchLabels:
+      app: sshwifty
+  template:
+    metadata:
+      name: sshwifty
+      labels:
+        app: sshwifty
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: ssh-wifty
+        image:  niruix/sshwifty:latest
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            memory: 500Mi
