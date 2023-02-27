@@ -10,3 +10,4 @@ resources:
 - prometheus-addons.yaml
 - cert-manager
 - sshwifty
+- keda
