@@ -8,12 +8,21 @@ spec:
   groups:
   - name: k8sworkshop.rules
     rules:
-    - alert: k8sworkshopPendingPods
+    - alert: k8sworkshopPendingPodsInDoof
       annotations: 
-        description: Im Namespace {{ $labels.namespace }} sind im Deployment {{ $labels.deployment }} ganze {{ $value }} nicht ausgerollt
+        description: Im Namespace {{ $labels.namespace }} sind im Deployment {{ $labels.deployment }} ganze {{ $value }} Pods nicht ausgerollt
         summary: There are some Pods pending
       expr: |-
         kube_deployment_status_replicas_unavailable>0
+      for:  1m
+      labels:
+        serverity: k8sworkshop
+    - alert: k8sworkshopPendingPods
+      annotations: 
+        description: Im Namespace {{ $labels.namespace }} sind im Deployment {{ $labels.deployment }} ganze {{ $value }} Pods nicht ausgerollt
+        summary: There are some Pods pending
+      expr: |-
+        kube_deployment_spec_replicas-kube_deployment_status_replicas_available>0
       for:  1m
       labels:
         serverity: k8sworkshop
