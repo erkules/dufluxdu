@@ -5,8 +5,8 @@ configMapGenerator:
   namespace: flux-system
   files:
   - values.yaml
+configurations:
+- kustomizeconfig.yaml
 resources:
 - helm-kyverno-reporter-repo.yaml 
 - helm-kyverno-reporter-release.yaml
-generatorOptions:
-  disableNameSuffixHash: true
