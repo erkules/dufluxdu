@@ -12,6 +12,8 @@ spec:
         kind: HelmRepository
         name: prometheus
       version: "42.2.0"
+  dependsOn:
+  - name: helm-ingress
   interval: 1m0s
   targetNamespace: monitoring
   releaseName: prometheus
