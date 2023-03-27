@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dummy
-  namespace: keda
 spec:
   strategy:
     type: RollingUpdate
@@ -29,7 +28,6 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: dummy
-  namespace: keda
   annotations:
     to: get_rid_of_missing_metrics_error
 spec:
