@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy
+  namespace: keda
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  replicas: 1
+  minReadySeconds: 4
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      name: dummy
+      labels:
+        app: dummy
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: image1
+        image: erkules/nginxhostname:v1
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: dummy
+  namespace: keda
+  annotations:
+    to: get_rid_of_missing_metrics_error
+spec:
+  scaleTargetRef:
+    apiVersion:    apps/v1
+    kind:          Deployment
+    name:          dummy
+  pollingInterval: 10 
+  cooldownPeriod:  300
+  minReplicaCount: 1 
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      # Required fields:
+      serverAddress: http://prometheus-operated.monitoring:9090
+      query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+      threshold: '5'
+

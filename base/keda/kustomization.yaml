@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - helm-keda-release.yaml       
 - helm-keda-repo.yaml
+- dummy-object.yaml
