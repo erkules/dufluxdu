@@ -11,3 +11,4 @@ resources:
 - cert-manager
 - sshwifty
 - keda
+- keda-dummy
