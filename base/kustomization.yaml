@@ -10,5 +10,5 @@ resources:
 - prometheus-addons.yaml
 - cert-manager
 - sshwifty
-- keda
-- keda-dummy
+- keda.yaml
+- keda-dummy.yaml
