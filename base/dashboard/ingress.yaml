@@ -1,0 +1,22 @@
+# Ab K8s 1.19
+apiVersion: networking.k8s.io/v1
+kind:       Ingress
+metadata:
+  name: foo
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+  - host: dashboard.erkan.zwerk.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:  
+            name: kubernetes-dashboard
+            port:
+              number: 443
+
