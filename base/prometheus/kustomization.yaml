@@ -9,4 +9,4 @@ configurations:
 - kustomizeconfig.yaml
 resources:
 - prometheus-release.yaml  
-- prometheus.repo.yaml
+- prometheus-repo.yaml
