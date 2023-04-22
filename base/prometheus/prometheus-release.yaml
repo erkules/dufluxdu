@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: prometheus
-      version: "45.10.1"
+      version: "42.2.0"
   dependsOn:
   - name: helm-ingress
   interval: 1m0s
