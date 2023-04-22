@@ -715,7 +715,7 @@ alertmanager:
 ##
 grafana:
   enabled: true
-  searchNamespace: ALL
+  #searchNamespace: ALL
   namespaceOverride: ""
 
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
@@ -741,6 +741,8 @@ grafana:
     ## If true, Grafana PSPs will be created
     ##
     pspEnabled: false
+    extraClusterRoleRules:
+    - view
 
   ingress:
     ## If true, Grafana Ingress will be created
