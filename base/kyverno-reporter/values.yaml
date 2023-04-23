@@ -113,7 +113,8 @@ profiling:
 reportFilter:
   namespaces:
     # Process only PolicyReport resources from an included namespace, wildcards are supported
-    include: []
+    include: 
+    - *
     # Ignore all PolicyReport resources from a excluded namespace, wildcards are supported
     # exclude will be ignored if an include filter exists
     exclude: []
@@ -233,7 +234,8 @@ target:
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to loki
-    sources: []
+    sources: 
+    - *
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
     # Added as additional labels to each Loki event
