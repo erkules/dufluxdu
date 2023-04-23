@@ -231,6 +231,7 @@ target:
   loki:
     # loki host address
     host: "http://loki.loki:3100"
+    path: "/loki/api/v1/push"
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to loki
