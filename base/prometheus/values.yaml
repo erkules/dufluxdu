@@ -715,7 +715,7 @@ alertmanager:
 ##
 grafana:
   enabled: true
-  searchNamespace: ALL
+  searchNamespace: "ALL"
   namespaceOverride: ""
 
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
@@ -781,6 +781,7 @@ grafana:
 
   sidecar:
     dashboards:
+      searchNamespace: "ALL"
       enabled: true
       label: grafana_dashboard
       labelValue: "1"
