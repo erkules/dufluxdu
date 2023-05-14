@@ -12,8 +12,6 @@ spec:
         kind: HelmRepository
         name: metrics
       version: "3.10.0"
-  dependsOn:
-    #  - name: helm-ingress
   interval: 1m0s
   targetNamespace: kube-system
   releaseName: metrics-server
