@@ -22,6 +22,6 @@ spec:
   upgrade:
     remediation:
       retries: 7
-  #  valuesFrom:
-  #  - kind: ConfigMap
-  #    name: dashboard-values
+    valuesFrom:
+    - kind: ConfigMap
+      name: metrics-values
