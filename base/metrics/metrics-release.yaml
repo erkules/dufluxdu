@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: metrics
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: metrics-server
+      sourceRef:
+        kind: HelmRepository
+        name: metrics
+      version: "3.10.0"
+  dependsOn:
+    #  - name: helm-ingress
+  interval: 1m0s
+  targetNamespace: kube-system
+  releaseName: metrics-server
+  install:
+    remediation:
+      retries: 7
+    createNamespace: true
+  upgrade:
+    remediation:
+      retries: 7
+  #  valuesFrom:
+  #  - kind: ConfigMap
+  #    name: dashboard-values
