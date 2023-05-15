@@ -236,7 +236,7 @@ target:
     minimumPriority: ""
     # list of sources which should send to loki
     sources: 
-    - '*'
+    - kyverno
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
     # Added as additional labels to each Loki event
