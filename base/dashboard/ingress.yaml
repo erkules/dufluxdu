@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   rules:
-  - host: dashboard.erkan.zwerk.org
+  - host: dashboard.${clustername}.zwerk.org
     http:
       paths:
       - path: /

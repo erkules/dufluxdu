@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: nginx-ingress
+  namespace: ingress
+spec:
+  selector:
+    matchExpressions:
+      - key: "app.kubernetes.io/name"
+        operator: In
+        values:
+          - ingress-nginx
+  podMetricsEndpoints:
+    - port: metrics
