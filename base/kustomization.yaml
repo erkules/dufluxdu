@@ -13,4 +13,3 @@ resources:
 - sshwifty
 - keda.yaml
 - keda-dummy.yaml
-- hallo
