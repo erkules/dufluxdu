@@ -13,3 +13,4 @@ resources:
 - sshwifty
 - keda.yaml
 - keda-dummy.yaml
+- argocd
