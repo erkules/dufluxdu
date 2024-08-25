@@ -8,13 +8,13 @@ promtail:
     lokiAddress: http://{{ .Release.Name }}:3100/loki/api/v1/push
     snippets:
       extraScrapeConfigs: |
-      - job_name: audit_logs
-        static_configs:
-        - targets:
-          - localhost
-          labels:
-            job: audit
-            __path__: /var/log/kubernetes/kube-apiserver-audit.log
+        - job_name: audit_logs
+          static_configs:
+          - targets:
+            - localhost
+            labels:
+              job: audit
+              __path__: /var/log/kubernetes/kube-apiserver-audit.log
 
 fluent-bit:
   enabled: false
