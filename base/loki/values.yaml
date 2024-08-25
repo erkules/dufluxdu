@@ -15,6 +15,14 @@ promtail:
             labels:
               job: audit
               __path__: /var/log/kubernetes/kube-apiserver-audit.log
+  extraVolumes:
+  - name: audit 
+    hostPath:
+      path: /var/log/kubernetes
+      type: DirectoryOrCreate
+  extraVolumeMounts:
+  - name: audit
+    mountPath: /var/log/kubernetes
 
 fluent-bit:
   enabled: false
