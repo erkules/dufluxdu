@@ -37,7 +37,13 @@ defaultRules:
     etcd: true
     configReloaders: true
     general: true
-    k8s: true
+    k8sContainerCpuUsageSecondsTotal: true
+    k8sContainerMemoryCache: true
+    k8sContainerMemoryRss: true
+    k8sContainerMemorySwap: true
+    k8sContainerResource: true
+    k8sContainerMemoryWorkingSetBytes: true
+    k8sPodOwner: true
     kubeApiserverAvailability: true
     kubeApiserverBurnrate: true
     kubeApiserverHistogram: true
@@ -585,9 +591,9 @@ alertmanager:
     ## Define resources requests and limits for single Pods.
     ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
     ##
-    resources: {}
-    # requests:
-    #   memory: 400Mi
+    resources: 
+      requests:
+        memory: 400Mi
 
     ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
     ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
