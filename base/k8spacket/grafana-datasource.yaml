@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8spacket1-datasource
+  namespace: monitoring
+  labels:
+    grafana_datasource: "1"
+data:
+  nodegraphapi-plugin-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: "Node Graph API"
+      jsonData:
+        url: "http://k8spacket.k8spacket.svc.cluster.local:8080/nodegraph"
+      access: "proxy"
+      basicAuth: false
+      isDefault: false
+      readOnly: false
+      type: "hamedkarbasi93-nodegraphapi-datasource"
+      typeLogoUrl: "public/plugins/hamedkarbasi93-nodegraphapi-datasource/img/logo.svg"
+      typeName: "node-graph-plugin"
+      orgId: 1
+      version: 1
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8spacket2-datasource
+  namespace: monitoring
+  labels:
+    grafana_datasource: "1"
+data:
+  marcusolsson-json-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: "JSON API"
+      url: "http://k8spacket.k8spacket.svc.cluster.local:8080/tlsparser/api/data"
+      access: "proxy"
+      basicAuth: false
+      isDefault: false
+      readOnly: false
+      type: "marcusolsson-json-datasource"
+      typeLogoUrl: "public/plugins/marcusolsson-json-datasource/img/logo.svg"
+      typeName: "json-api-plugin"
+      orgId: 1
+      version: 1

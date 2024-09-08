@@ -1,3 +1,6 @@
+Wir wollen flux mit KSM monitoren
+   https://github.com/fluxcd/flux2-monitoring-example/blob/bcae1ef44963da89caabe962a93280c0dfad3381/monitoring/controllers/kube-prometheus-stack/kube-state-metrics-config.yaml#L114-L132
+
 certmanager für lokale Certs verwenden
 
 

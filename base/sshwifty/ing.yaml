@@ -6,7 +6,7 @@ metadata:
   namespace: sshwifty
 spec:
   rules:
-  - host: sshwifty.${clustername}.zwerk.org
+  - host: sshwifty.${clustername}.${domain}
     http:
       paths:
       - path: /

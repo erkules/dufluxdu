@@ -23,15 +23,15 @@ spec:
 
     # "{{ request.object.spec.rules[].host | length(@) }}"    
     validate:
-      message: "Host-Entry needs to fullfill *.{{ request.object.metadata.namespace }}.k8s.zwerk.org"
+      message: "Host-Entry needs to fullfill *.{{ request.object.metadata.namespace }}.k8s.${domain}"
       foreach:
       - list:  "request.object.spec.rules"
         deny:
           conditions:
           - key: "{{ element.host  }}"
             operator: NotEquals
-            value: "{{ request.object.metadata.namespace }}.k8s.zwerk.org"
-          - key: "{{ element.host |  contains(@, '.{{ request.object.metadata.namespace }}.k8s.zwerk.org') }}"
+            value: "{{ request.object.metadata.namespace }}.k8s.${domain}"
+          - key: "{{ element.host |  contains(@, '.{{ request.object.metadata.namespace }}.k8s.${domain}') }}"
             operator: Equals
             value: false
 

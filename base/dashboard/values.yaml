@@ -172,9 +172,9 @@ ingress:
   paths:
     - /
   hosts:
-    - dashboard.erkan.zwerk.org
+    - dashboard.erkan.${domain}
 settings:
-  clusterName: "erkan.zwerk.org"
+  clusterName: "erkan.${domain}"
 pinnedCRDs:
   []
   # - kind: customresourcedefinition
