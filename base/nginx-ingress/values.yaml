@@ -18,19 +18,21 @@ controller:
   image:
     ## Keep false as default for now!
     chroot: false
-    registry: k8s.gcr.io
+    registry: registry.k8s.io
     image: ingress-nginx/controller
     ## for backwards compatibility consider setting the full image url via the repository value below
     ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
     ## repository:
-    tag: "v1.2.0"
-    digest: sha256:d8196e3bc1e72547c5dec66d6556c0ff92a23f6d0919b206be170bc90d5f9185
-    digestChroot: sha256:fb17f1700b77d4fcc52ca6f83ffc2821861ae887dbb87149cf5cbc52bea425e5
+    tag: "v1.11.2"
+    digest: sha256:d5f8217feeac4887cb1ed21f27c2674e58be06bd8f5184cacea2a69abaf78dce
+    digestChroot: sha256:21b55a2f0213a18b91612a8c0850167e00a8e34391fd595139a708f9c047e7a8
     pullPolicy: IfNotPresent
     # www-data -> uid 101
     runAsUser: 101
-    allowPrivilegeEscalation: true
-
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    readOnlyRootFilesystem: false
   # -- Use an existing PSP instead of creating one
   existingPsp: ""
 
@@ -632,18 +634,22 @@ controller:
     patch:
       enabled: true
       image:
-        registry: k8s.gcr.io
+        registry: registry.k8s.io
         image: ingress-nginx/kube-webhook-certgen
         ## for backwards compatibility consider setting the full image url via the repository value below
         ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
         ## repository:
-        tag: v1.1.1
-        digest: sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660
+        tag: v1.4.3
+        digest: sha256:a320a50cc91bd15fd2d6fa6de58bd98c1bd64b9a6f926ce23a600d87043455a3
         pullPolicy: IfNotPresent
       # -- Provide a priority class name to the webhook patching job
       ##
       priorityClassName: ""
       podAnnotations: {}
+      # NetworkPolicy for webhook patch
+      networkPolicy:
+        # -- Enable 'networkPolicy' or not
+        enabled: false
       nodeSelector:
         kubernetes.io/os: linux
       tolerations: []
