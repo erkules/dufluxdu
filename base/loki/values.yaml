@@ -1,6 +1,9 @@
 loki:
   enabled: true
   isDefault: true
+  image: 
+    repository: grafana/loki
+    tag: latest
 
 promtail:
   enabled: true
