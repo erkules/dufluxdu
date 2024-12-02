@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: loki-promtail
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: prometheus
+  decryption:
+    provider: sops
+  path: base/loki-promtail
+  sourceRef:
+    kind: GitRepository
+    name: gitrepo
+  postBuild:
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-vars
+      optional: true
+  interval: 1m
+  prune:    true

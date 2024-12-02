@@ -2,21 +2,21 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: loki
+  name: promtail
   namespace: flux-system
 spec:
   chart:
     spec:
-      chart: loki-distributed
+      chart: promtail
       sourceRef:
         kind: HelmRepository
-        name: loki
-      version: "0.80.0"
+        name: promtail
+      version: "6.16.6"
   dependsOn:
   - name: prometheus
   interval: 1m0s
-  targetNamespace: loki
-  releaseName: loki
+  targetNamespace: promtail
+  releaseName: promtail
   install:
     remediation:
       retries: 7
@@ -26,4 +26,4 @@ spec:
       retries: 7
   valuesFrom:
   - kind: ConfigMap
-    name: loki-values
+    name: values
