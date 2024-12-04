@@ -1,6 +1,7 @@
 grafana:
   enabled: true
-  hosts:
+  ingress:
+    hosts:
     - grafana.${clustername}.zwerk.org
 
 prometheus:
@@ -8,4 +9,4 @@ prometheus:
   ingress:
     enabled: true
     hosts:
-      - prometheus.${clustername}.zwerk.org
+    - prometheus.${clustername}.zwerk.org
