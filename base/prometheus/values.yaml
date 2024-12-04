@@ -372,23 +372,6 @@ alertmanager:
   ##
   templateFiles: {}
   #
-  ## An example template:
-  #   template_1.tmpl: |-
-  #       {{ define "cluster" }}{{ .ExternalURL | reReplaceAll ".*alertmanager\\.(.*)" "$1" }}{{ end }}
-  #
-  #       {{ define "slack.myorg.text" }}
-  #       {{- $root := . -}}
-  #       {{ range .Alerts }}
-  #         *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
-  #         *Cluster:* {{ template "cluster" $root }}
-  #         *Description:* {{ .Annotations.description }}
-  #         *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
-  #         *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
-  #         *Details:*
-  #           {{ range .Labels.SortedPairs }} - *{{ .Name }}:* `{{ .Value }}`
-  #           {{ end }}
-  #       {{ end }}
-  #       {{ end }}
 
   ingress:
     enabled: false
@@ -483,11 +466,6 @@ alertmanager:
     annotations: {}
     labels: {}
 
-    ## Final form of the hostname for each per replica ingress is
-    ## {{ ingressPerReplica.hostPrefix }}-{{ $replicaNumber }}.{{ ingressPerReplica.hostDomain }}
-    ##
-    ## Prefix for the per replica ingress that will have `-$replicaNumber`
-    ## appended to the end
     hostPrefix: ""
     ## Domain that will be used for the per replica ingress
     hostDomain: ""
@@ -510,7 +488,6 @@ alertmanager:
     tlsSecretPerReplica:
       enabled: false
       ## Final form of the secret for each per replica ingress is
-      ## {{ tlsSecretPerReplica.prefix }}-{{ $replicaNumber }}
       ##
       prefix: "alertmanager"
 
@@ -3071,9 +3048,7 @@ prometheus:
 
   # Service for thanos service discovery on sidecar
   # Enable this can make Thanos Query can use
-  # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
   # Thanos sidecar on prometheus nodes
-  # (Please remember to change ${kube-prometheus-stack.fullname} and ${namespace}. Not just copy and paste!)
   thanosService:
     enabled: false
     annotations: {}
