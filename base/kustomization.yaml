@@ -8,6 +8,7 @@ resources:
 - prometheus.yaml
 - flux-monitoring.yaml
 - loki.yaml
+- loki-promtail.yaml
 - prometheus-addons.yaml
 - cert-manager
 - sshwifty
