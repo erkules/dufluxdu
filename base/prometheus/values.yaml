@@ -13,7 +13,9 @@ prometheus:
     hosts:
     - prometheus.${clustername}.zwerk.org
   prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: true
     serviceMonitorSelector: 
       matchLabels: {}
     podMonitorNamespaceSelector:
       matchLabels: {}
+    podMonitorSelectorNilUsesHelmValues: true
