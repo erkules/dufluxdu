@@ -3790,8 +3790,7 @@ prometheus:
     ## If {}, select all PodMonitors
     ##
     podMonitorSelector:
-      podMonitorSelector: {}
-    #   matchLabels:
+      matchLabels: {}
     #     prometheus: somelabel
 
     ## If nil, select own namespace. Namespaces to be selected for PodMonitor discovery.
