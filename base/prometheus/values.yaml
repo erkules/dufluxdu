@@ -1,5 +1,6 @@
 grafana:
   enabled: true
+  adminPassword: zwerk-operator
   ingress:
     enabled: true
     hosts:
@@ -11,3 +12,8 @@ prometheus:
     enabled: true
     hosts:
     - prometheus.${clustername}.zwerk.org
+  prometheusSpec:
+    serviceMonitorSelector: 
+      matchLabels: {}
+    podMonitorNamespaceSelector:
+      matchLabels: {}
