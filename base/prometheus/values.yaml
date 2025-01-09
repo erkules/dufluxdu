@@ -3740,7 +3740,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the PrometheusRule resources created
     ##
-    ruleSelectorNilUsesHelmValues: true
+    ruleSelectorNilUsesHelmValues: false
 
     ## PrometheusRules to be selected for target discovery.
     ## If {}, select all PrometheusRules
@@ -3802,7 +3802,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the probes created
     ##
-    probeSelectorNilUsesHelmValues: true
+    probeSelectorNilUsesHelmValues: false
 
     ## Probes to be selected for target discovery.
     ## If {}, select all Probes
@@ -3827,7 +3827,7 @@ prometheus:
     ## If null and scrapeConfigSelector is also null, exclude field from the prometheusSpec
     ## (keeping downward compatibility with older versions of CRD)
     ##
-    scrapeConfigSelectorNilUsesHelmValues: true
+    scrapeConfigSelectorNilUsesHelmValues: false
 
     ## scrapeConfigs to be selected for target discovery.
     ## If {}, select all scrapeConfigs
