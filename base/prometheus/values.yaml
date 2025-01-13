@@ -210,7 +210,7 @@ global:
 
     ## Create ClusterRoles that extend the existing view, edit and admin ClusterRoles to interact with prometheus-operator CRDs
     ## Ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles
-    createAggregateClusterRoles: false
+    createAggregateClusterRoles: true
     pspEnabled: false
     pspAnnotations: {}
       ## Specify pod annotations
@@ -3092,9 +3092,6 @@ prometheus:
 
   # Service for thanos service discovery on sidecar
   # Enable this can make Thanos Query can use
-  # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
-  # Thanos sidecar on prometheus nodes
-  # (Please remember to change ${kube-prometheus-stack.fullname} and ${namespace}. Not just copy and paste!)
   thanosService:
     enabled: false
     annotations: {}
@@ -3770,14 +3767,14 @@ prometheus:
     ## ServiceMonitors to be selected for target discovery.
     ## If {}, select all ServiceMonitors
     ##
-    serviceMonitorSelector:
-       matchLabels: {}
+    serviceMonitorSelector: {}
+    #   matchLabels: {}
     #     prometheus: somelabel
 
     ## Namespaces to be selected for ServiceMonitor discovery.
     ##
-    serviceMonitorNamespaceSelector:
-      matchLabels: {}
+    serviceMonitorNamespaceSelector: {}
+    #  matchLabels: {}
     #     prometheus: somelabel
 
     ## If true, a nil or {} value for prometheus.prometheusSpec.podMonitorSelector will cause the
@@ -3789,13 +3786,13 @@ prometheus:
     ## PodMonitors to be selected for target discovery.
     ## If {}, select all PodMonitors
     ##
-    podMonitorSelector:
-      matchLabels: {}
+    podMonitorSelector: {}
+    #  matchLabels: {}
     #     prometheus: somelabel
 
     ## If nil, select own namespace. Namespaces to be selected for PodMonitor discovery.
-    podMonitorNamespaceSelector:
-      matchLabels: {}
+    podMonitorNamespaceSelector: {}
+    #  matchLabels: {}
     #     prometheus: somelabel
 
     ## If true, a nil or {} value for prometheus.prometheusSpec.probeSelector will cause the
@@ -4004,7 +4001,6 @@ prometheus:
     #     action: replace
     #     targetLabel: __address__
     #     regex: ([^:;]+):(\d+)
-    #     replacement: ${1}:2379
     #   - source_labels: [__meta_kubernetes_node_name]
     #     action: keep
     #     regex: .*mst.*
@@ -4012,7 +4008,6 @@ prometheus:
     #     action: replace
     #     targetLabel: node
     #     regex: (.*)
-    #     replacement: ${1}
     #   metric_relabel_configs:
     #   - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
     #     action: labeldrop
