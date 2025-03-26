@@ -22,5 +22,6 @@ spec:
   upgrade:
     remediation:
       retries: 7
-  values:
-    replicaCount: 3
+  valuesFrom:
+  - kind: ConfigMap
+    name: kyverno-values
