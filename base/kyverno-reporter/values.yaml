@@ -1,12 +1,3 @@
-image:
-  registry: ghcr.io
-  repository: kyverno/policy-reporter
-  pullPolicy: IfNotPresent
-  tag: 2.19.0
-
-imagePullSecrets: []
-
-replicaCount: 1
 
 deploymentStrategy: {}
   # rollingUpdate:
