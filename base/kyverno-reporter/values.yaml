@@ -1217,7 +1217,7 @@ plugin:
 
 monitoring:
   # -- Enables the Prometheus Operator integration
-  enabled: false
+  enabled: true
 
   # -- Key/value pairs that are attached to all resources.
   annotations: {}
