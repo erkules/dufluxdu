@@ -156,7 +156,7 @@ metrics:
   mode: detailed
   # -- List of used labels in custom mode
   # Supported fields are: ["namespace", "rule", "policy", "report" // PolicyReport name, "kind" // resource kind, "name" // resource name, "status", "severity", "category", "source"]
-  customLabels: []
+  customLabels: ["namespace", "rule", "policy", "report" , "kind" , "name", "status", "severity", "category", "source", "message" ]
   # -- Filter results to reduce cardinality
   filter: {}
 #    sources:
@@ -181,12 +181,12 @@ reportFilter: {}
   # disableClusterReports: false
 
 # -- Customize source specific logic like result ID generation
-sourceConfig: []
-# - selector:
-#     source: kyverno
-#   customId:
-#     enabled: true
-#     fields: ["resource", "policy", "rule", "category", "result", "message"]
+sourceConfig:
+ - selector:
+     source: kyverno
+   customId:
+     enabled: true
+     fields: ["resource", "policy", "rule", "category", "result", "message"]
 
 # Source based PolicyReport filter
 sourceFilters:
