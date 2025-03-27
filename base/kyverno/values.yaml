@@ -1876,7 +1876,8 @@ reportsController:
   dnsPolicy: ClusterFirst
 
   # -- Extra arguments passed to the container on the command line
-  extraArgs: {}
+  extraArgs: 
+    aggregationWorkers: 5
 
   # -- Additional container environment variables.
   extraEnvVars: []
