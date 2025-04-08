@@ -1,0 +1,25 @@
+# For Kyverno to delete (Cluster)Rolebiindings it needs to have that privileges
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kyverno-cleanup-controller-unkown-user # This should match the roleRef in the ClusterRoleBinding
+  namespace: kyverno # While ClusterRoles are cluster-scoped, this namespace is often used for organization
+rules:
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["rolebindings", "clusterrolebindings"]
+  verbs: ["get", "list", "watch", "delete"] # Crucial for cleanup of RBAC bindings
+# Add any other permissions the cleanup controller might need
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kyverno-cleanup-controller-unkown-user  # This is a common name, but might vary
+  namespace: kyverno # Ensure this matches the namespace where kyverno-cleanup-controller runs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kyverno-cleanup-controller-unkown-user # This should match the ClusterRole name
+subjects:
+- kind: ServiceAccount
+  name: kyverno-cleanup-controller
+  namespace: kyverno # Ensure this matches the namespace where kyverno-cleanup-controller runs

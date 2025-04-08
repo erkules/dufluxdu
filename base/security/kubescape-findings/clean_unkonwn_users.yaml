@@ -1,0 +1,21 @@
+# wir wollen non-usern keine rechte geben
+apiVersion: kyverno.io/v2
+kind: ClusterCleanupPolicy
+metadata:
+  name: get-rid-of-unknown-users
+spec:
+  match:
+    any:
+    - resources:
+        kinds:
+        - RoleBinding
+        - ClusterRoleBinding
+  conditions:
+    any:
+    - key: "{{ target.subjects[*].name }}"
+      operator: AnyIn
+      value: 
+      - "system:anonymous"
+      - "system:unauthenticated"
+  schedule: "*/5 * * * *"
+
