@@ -2,10 +2,11 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: node-problem-detector
+  name: flux
   namespace: flux-system
 spec:
+  type: oci
   interval: 5m0s
   timeout: 1m0s
-  url: https://charts.deliveryhero.io/
+  url: oci://ghcr.io/fluxcd-community/charts/flux2
 
