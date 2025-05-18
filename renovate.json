@@ -1,3 +1,13 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "extends": ["config:recommended"],
+  "enabledManagers": ["flux", "kustomize", "helmv3"],
+  "flux": {
+    "fileMatch": [".*\\.yaml$"]
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["kube-prometheus-stack"],
+      "enabled": false
+    }
+  ]
 }

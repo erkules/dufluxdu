@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: npd
+  name: node-problem-detector
   namespace: flux-system
 spec:
   interval: 5m0s
