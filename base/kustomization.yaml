@@ -15,5 +15,7 @@ resources:
 - keda.yaml
 - keda-dummy.yaml
 - security.yaml
+- node-problem-detector.yaml
 #- argocd
+
 
