@@ -10,3 +10,9 @@ sshwifty hat eigentlich auch eine Abhängigkeit zum ngingx. Nur haben wir Abhän
 [done]Prometheus soll out of the box nach annotations scrapen (wie früher)
 
 [done]Was ist mit dummy-object.yaml im Keda
+
+
+Doppelt!!
+loki-promtail/grafana-datasource.yaml
+./loki/grafana-datasource.yaml
+
