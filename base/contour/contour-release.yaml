@@ -22,6 +22,6 @@ spec:
   upgrade:
     remediation:
       retries: 7
-#  valuesFrom:
-#  - kind: ConfigMap
-#    name: nginx-values
+  valuesFrom:
+  - kind: ConfigMap
+    name: contour-values
