@@ -1,0 +1,27 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: contour
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: contour
+      sourceRef:
+        kind: HelmRepository
+        name: contour
+      version: "12.0.0"
+  interval: 1m0s
+  targetNamespace: projectcontour
+  releaseName: contour
+  install:
+    remediation:
+      retries: 7
+    createNamespace: true
+  upgrade:
+    remediation:
+      retries: 7
+#  valuesFrom:
+#  - kind: ConfigMap
+#    name: nginx-values
