@@ -16,3 +16,5 @@ Doppelt!!
 loki-promtail/grafana-datasource.yaml
 ./loki/grafana-datasource.yaml
 
+Grafana braucht nen sidecar welchen configmaps via api synct
+
