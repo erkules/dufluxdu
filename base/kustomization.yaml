@@ -4,9 +4,9 @@ resources:
 - metrics
 - kyverno
 - kyverno-reporter
-#- nginx-ingress
-- contour.yaml
-- contour-add.yaml
+- nginx-ingress
+#- contour.yaml
+#- contour-add.yaml
 - prometheus.yaml
 - flux-monitoring.yaml
 - loki.yaml
