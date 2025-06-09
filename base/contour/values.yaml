@@ -1798,7 +1798,7 @@ metrics:
     namespace: ""
     ## @param metrics.serviceMonitor.enabled Specify if a servicemonitor will be deployed for prometheus-operator.
     ##
-    enabled: false
+    enabled: true
     ## @param metrics.serviceMonitor.jobLabel Specify the jobLabel to use for the prometheus-operator
     ##
     jobLabel: "app.kubernetes.io/name"
@@ -1828,7 +1828,7 @@ metrics:
   prometheusRule:
     ## @param metrics.prometheusRule.enabled Creates a Prometheus Operator prometheusRule
     ##
-    enabled: false
+    enabled: true
     ## @param metrics.prometheusRule.namespace Namespace for the prometheusRule Resource (defaults to the Release Namespace)
     ##
     namespace: ""
@@ -1862,4 +1862,3 @@ rbac:
 tlsExistingSecret: ""
 ## @param useCertManager Use Cert-manager instead of Contour certgen to issue certificates for TLS connection between Contour and Envoy.
 useCertManager: false
-

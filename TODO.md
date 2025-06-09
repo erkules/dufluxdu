@@ -12,6 +12,8 @@
 
 [done]Was ist mit dummy-object.yaml im Keda
 
+./prometheus/prometheus-release.yaml <- hier depends_on raus genommen wohl wieder rein
+
 [] Redesign all. Wir haben Kreispendencies
 
 Doppelt!!
