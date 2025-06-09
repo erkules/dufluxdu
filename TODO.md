@@ -15,6 +15,7 @@
 ./prometheus/prometheus-release.yaml <- hier depends_on raus genommen wohl wieder rein
 
 [] Redesign all. Wir haben Kreispendencies
+[] oauth-proxy mit basic-auth
 
 Doppelt!!
 loki-promtail/grafana-datasource.yaml

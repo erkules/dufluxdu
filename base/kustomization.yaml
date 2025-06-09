@@ -1,11 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- crds.yaml
 - metrics
 - kyverno
 - kyverno-reporter
 #- nginx-ingress
-#- contour.yaml
+- contour.yaml
 #- contour-add.yaml
 - prometheus.yaml
 - flux-monitoring.yaml
