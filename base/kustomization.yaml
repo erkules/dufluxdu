@@ -6,7 +6,7 @@ resources:
 - kyverno
 - kyverno-reporter
 #- nginx-ingress
-- contour.yaml
+#- contour.yaml
 #- contour-add.yaml
 - prometheus.yaml
 - flux-monitoring.yaml
