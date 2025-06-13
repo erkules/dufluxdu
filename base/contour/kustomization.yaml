@@ -7,7 +7,8 @@ kind: Kustomization
 #configurations:
 #  - kustomizeconfig.yaml
 resources:
-  - contour.yaml
+#  - contour.yaml
+  - contour-gateway-provisioner.yaml
 #  - contour-release.yaml
 #  - contour-repo.yaml
   - gatewayclass.yaml
