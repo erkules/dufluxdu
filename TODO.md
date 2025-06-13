@@ -1,3 +1,6 @@
+[] Contour läuft nicht mit Certificate
+  base/contour/values.yaml -> self-signed enablen und cluster-vars verwenden wegen domain
+  alternativ mit certmanager 
 [] Wir wollen flux mit KSM monitoren
    https://github.com/fluxcd/flux2-monitoring-example/blob/bcae1ef44963da89caabe962a93280c0dfad3381/monitoring/controllers/kube-prometheus-stack/kube-state-metrics-config.yaml#L114-L132
 
@@ -17,9 +20,9 @@
 [] Redesign all. Wir haben Kreispendencies
 [] oauth-proxy mit basic-auth
 
-Doppelt!!
+[]Doppelt!!
 loki-promtail/grafana-datasource.yaml
 ./loki/grafana-datasource.yaml
 
-Grafana braucht nen sidecar welchen configmaps via api synct
+[]Grafana braucht nen sidecar welchen configmaps via api synct
 
