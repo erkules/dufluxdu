@@ -41,9 +41,9 @@ metadata:
 data:
   contour.yaml: |
     # Specify the Gateway API configuration.
-    # gateway:
-    #   namespace: projectcontour
-    #   name: contour
+    gateway:
+      namespace: projectcontour
+      name: contour
     #
     # should contour expect to be running inside a k8s cluster
     # incluster: true

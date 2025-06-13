@@ -12,3 +12,4 @@ resources:
 #  - contour-repo.yaml
   - gatewayclass.yaml
   - ingressclass.yaml
+  - issuerandcert.yaml
