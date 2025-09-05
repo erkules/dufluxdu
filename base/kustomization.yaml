@@ -11,7 +11,8 @@ resources:
 - prometheus.yaml
 - flux-monitoring.yaml
 - loki.yaml
-- loki-promtail.yaml
+#- loki-promtail.yaml
+- alloy.yaml
 - prometheus-addons.yaml
 - cert-manager
 - sshwifty
@@ -20,5 +21,6 @@ resources:
 #- security.yaml
 - node-problem-detector.yaml
 #- argocd
+- system-upgrade-controller
 
 
