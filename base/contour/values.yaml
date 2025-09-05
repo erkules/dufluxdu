@@ -108,7 +108,7 @@ contour:
   image:
     registry: docker.io
     repository: bitnami/contour
-    tag: 1.32.0-debian-12-r0
+    tag: 1.32.0-debian-12-r3
     digest: ""
     ## Specify a imagePullPolicy
     ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
@@ -491,7 +491,8 @@ contour:
     externalTrafficPolicy: Cluster
     ## @param contour.service.annotations Additional custom annotations for Contour service
     ##
-    annotations: {}
+    annotations: 
+      load-balancer.hetzner.cloud/location: "fsn1"
     ## @param contour.service.extraPorts Extra port to expose on Contour service
     ##
     extraPorts: []
@@ -668,7 +669,7 @@ envoy:
   image:
     registry: docker.io
     repository: bitnami/envoy
-    tag: 1.34.1-debian-12-r1
+    tag: 1.34.1-debian-12-r2
     digest: ""
     ## Specify a imagePullPolicy
     ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
@@ -939,9 +940,7 @@ envoy:
   ## @param envoy.tolerations [array] Tolerations for Envoy pod assignment
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
-  tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
+  tolerations: []
   ## @param envoy.podAnnotations [object] Envoy Pod annotations
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
@@ -993,7 +992,7 @@ envoy:
   ## @param envoy.hostNetwork Envoy Pod host network access
   ## ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#host-namespaces
   ##
-  hostNetwork: true
+  hostNetwork: false
   ## @param envoy.dnsPolicy Envoy Pod Dns Policy's DNS Policy
   ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
   ##
@@ -1107,7 +1106,7 @@ envoy:
       metrics: metrics
     ## @param envoy.service.type Type of Envoy service to create
     ##
-    type: ClusterIP
+    type: LoadBalancer
     ## @param envoy.service.externalTrafficPolicy Envoy Service external cluster policy. If `envoy.service.type` is NodePort or LoadBalancer
     ##
     externalTrafficPolicy: Local
@@ -1329,7 +1328,7 @@ envoy:
 gatewayAPI:
   ## @param gatewayAPI.manageCRDs Manage the creation, upgrade and deletion of Gateway API CRDs.
   ##
-  manageCRDs: false
+  manageCRDs: true
 
 ## @section Default backend parameters
 ##
@@ -1352,7 +1351,7 @@ defaultBackend:
   image:
     registry: docker.io
     repository: bitnami/nginx
-    tag: 1.28.0-debian-12-r1
+    tag: 1.28.0-debian-12-r3
     digest: ""
     ## Specify a imagePullPolicy
     ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
@@ -1828,7 +1827,7 @@ metrics:
   prometheusRule:
     ## @param metrics.prometheusRule.enabled Creates a Prometheus Operator prometheusRule
     ##
-    enabled: true
+    enabled: false
     ## @param metrics.prometheusRule.namespace Namespace for the prometheusRule Resource (defaults to the Release Namespace)
     ##
     namespace: ""
@@ -1862,3 +1861,9 @@ rbac:
 tlsExistingSecret: ""
 ## @param useCertManager Use Cert-manager instead of Contour certgen to issue certificates for TLS connection between Contour and Envoy.
 useCertManager: false
+gatewayController:
+  enabled: true
+  controllerName: projectcontour.io/gateway-controller
+gateway:
+  enabled: true
+  controllerName: projectcontour.io/gateway-controller

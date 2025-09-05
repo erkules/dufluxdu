@@ -9,6 +9,7 @@
 
 []sshwifty hat eigentlich auch eine Abhängigkeit zum ngingx. Nur haben wir Abhängigkeiten mit Helmreleases aufgebaut. 
   sshwifty ist aber ein schlichtes Deployment.
+  ingress-class ist falsch gesetzt
 
 
 [done]Prometheus soll out of the box nach annotations scrapen (wie früher)
@@ -26,3 +27,5 @@ loki-promtail/grafana-datasource.yaml
 
 []Grafana braucht nen sidecar welchen configmaps via api synct
 
+[] Storagclass Hetzner-> umbenennen
+[] Storagclass Hetzner-> waitforfirstconsumer weg 
