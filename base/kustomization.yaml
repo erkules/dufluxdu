@@ -22,4 +22,4 @@ resources:
 - node-problem-detector.yaml
 #- argocd
 - system-upgrade-controller.yaml
-
+- system-upgrade-controller-plan.yaml
