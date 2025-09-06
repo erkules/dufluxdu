@@ -14,7 +14,7 @@ stringData:
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: capi-system
+  name: capi-system2
   namespace: system-upgrade
   labels:
     os: upgrade
@@ -29,7 +29,7 @@ spec:
       path: /host/run/system-upgrade/secrets/capi-system
   #drain:
   #  force: true
-  version: bionic2
+  version: bionic3
   upgrade:
     image: ubuntu
     command: ["chroot", "/host"]
