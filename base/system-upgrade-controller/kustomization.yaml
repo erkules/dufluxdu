@@ -5,3 +5,4 @@ resources:
 - clusterrole.yaml
 - clusterrolebinding.yaml
 - system-upgrade-controller.yaml
+- suc-plan.yaml
