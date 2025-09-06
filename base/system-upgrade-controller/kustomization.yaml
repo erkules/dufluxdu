@@ -5,4 +5,3 @@ resources:
 - clusterrole.yaml
 - clusterrolebinding.yaml
 - system-upgrade-controller.yaml
-- zz-os-plan.yaml
