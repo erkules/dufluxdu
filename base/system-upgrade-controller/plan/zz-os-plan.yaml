@@ -23,6 +23,10 @@ spec:
   nodeSelector:
     matchExpressions:
       - { key: beta.kubernetes.io/os, operator: In, values: ["linux"]}
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
   serviceAccountName: system-upgrade
   secrets:
     - name: capi-system
