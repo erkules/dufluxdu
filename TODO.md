@@ -21,7 +21,7 @@
 [] Redesign all. Wir haben Kreispendencies
 [] oauth-proxy mit basic-auth
 
-[]Doppelt!!
+[x]Doppelt!!
 loki-promtail/grafana-datasource.yaml
 ./loki/grafana-datasource.yaml
 
@@ -29,3 +29,9 @@ loki-promtail/grafana-datasource.yaml
 
 [] Storagclass Hetzner-> umbenennen
 [] Storagclass Hetzner-> waitforfirstconsumer weg 
+[done] system-update-controller plan muss ausgeführt werden
+[] Authentication alloy->loki etc
+[] Mehr SOPS :)
+[] Die allow-logging-config sollte in eine eigene externe configmap. Jetze sourcen wir händisch base/alloy/logging.alloy .. schon nervig
+[] Minio ausrollen
+[] Loki -> Minio oder OTEL

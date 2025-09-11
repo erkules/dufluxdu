@@ -32,13 +32,71 @@ alloy:
   configMap:
     create: true
     # -- Content to assign to the new ConfigMap.  This is passed into `tpl` allowing for templating from values.
+    # Das sollten wir in eine eigene Configmap auslagern
     content: |-
-      loki.write "local" {
-        endpoint {
-          url       = "http://loki-loki-distributed-gateway.loki/loki/api/v1/push"
-          tenant_id = "hallowelt" 
+      // alloy-settings.alloy
+      logging {  
+        level  = "info"  
+        format = "logfmt"  
+      }
 
+      discovery.kubernetes "pods" {  
+        role = "pod"  
+      }
+
+      discovery.relabel "kube_relabel" {  
+        targets = discovery.kubernetes.pods.targets
+
+        // Essential K8s Labels (add/remove as needed)  
+        rule {  
+          source_labels = ["__meta_kubernetes_namespace"]  
+          target_label  = "namespace"  
+        }  
+        rule {  
+          source_labels = ["__meta_kubernetes_pod_name"]  
+          target_label  = "pod"  
+        }  
+        rule {  
+          source_labels = ["__meta_kubernetes_pod_container_name"]  
+          target_label  = "container"  
+        }  
+        rule {  
+          source_labels = ["__meta_kubernetes_node_name"]  
+          target_label  = "node_name"  
+        }  
+        // Keep __path__ definition  
+        rule {  
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]  
+          target_label  = "__path__"  
+          replacement   = "/var/log/pods/*$1/*.log"  
         }
+
+        // Explicitly add 'app' label if __meta_kubernetes_pod_label_app exists  
+        rule {  
+          source_labels = ["__meta_kubernetes_pod_label_app"]  
+          action        = "replace"  
+          target_label  = "app"  
+          regex         = "(.+)"  // Capture any non-empty value  
+          replacement   = "$1"    // Use the captured value  
+        }
+
+        rule {  
+          action = "labeldrop"  
+          regex  = "__meta_kubernetes_pod_label_app" // <<< Match the label NAME to drop  
+        }  
+      }
+
+      // Tail logs from the RELABELED targets  
+      loki.source.kubernetes "kube_logs" {  
+        targets    = discovery.relabel.kube_relabel.output  
+        forward_to = [loki.write.local_loki.receiver] // Forward DIRECTLY to exporter  
+      }
+
+      // Loki exporter component  
+      loki.write "local_loki" {  
+        endpoint {  
+          url = "http://loki-loki-distributed-gateway.loki/loki/api/v1/push"
+        }  
       }
 
     # -- Name of existing ConfigMap to use. Used when create is false.
@@ -118,7 +176,7 @@ alloy:
     varlog: true
     # -- Mount /var/lib/docker/containers from the host into the container for log
     # collection.
-    dockercontainers: true
+    #dockercontainers: true
 
     # -- Extra volume mounts to add into the Grafana Alloy container. Does not
     # affect the watch container.
