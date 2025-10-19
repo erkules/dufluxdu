@@ -1,12 +1,29 @@
 {
-  "extends": ["config:recommended"],
-  "enabledManagers": ["flux", "kustomize", "helmv3"],
+  "branchPrefix": "renovate/",
+  "separateMultipleMajor": false,
+  "groupName": "all-dependencies",
+  "groupSlug": "all",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "flux",
+    "kustomize",
+    "helmv3"
+  ],
   "flux": {
-    "fileMatch": [".*\\.yaml$"]
+    "fileMatch": [
+      "base/.*\\.yaml$",
+      ".*-release\\.yaml",
+      ".*-repo\\.yaml",
+      "^[^/]+\\.yaml$"
+    ]
   },
   "packageRules": [
     {
-      "matchPackageNames": ["kube-prometheus-stack"],
+      "matchPackageNames": [
+        "kube-prometheus-stack"
+      ],
       "enabled": false
     }
   ]
