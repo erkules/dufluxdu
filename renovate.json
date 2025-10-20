@@ -14,7 +14,7 @@
   "flux": {
     "fileMatch": [
       "base/.*\\.yaml$",
-      ".*-release\\.yaml",
+      ".*-release\\.yaml$",
       ".*-repo\\.yaml",
       "^[^/]+\\.yaml$"
     ]
@@ -24,7 +24,7 @@
       "matchPackageNames": [
         "kube-prometheus-stack"
       ],
-      "enabled": false
+      "enabled": true
     }
   ]
 }

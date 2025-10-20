@@ -35,3 +35,7 @@ loki-promtail/grafana-datasource.yaml
 [] Die allow-logging-config sollte in eine eigene externe configmap. Jetze sourcen wir händisch base/alloy/logging.alloy .. schon nervig
 [] Minio ausrollen
 [] Loki -> Minio oder OTEL
+[] fluxupdaten hier
+[] fluxupdaten k8sworkshopo
+[] fluxupdaten CAPI
+[] https://fluxcd.io/flux/components/helm/helmreleases/#drift-detection
