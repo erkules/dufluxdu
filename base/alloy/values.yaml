@@ -35,6 +35,7 @@ alloy:
     # Das sollten wir in eine eigene Configmap auslagern
     content: |-
       // alloy-settings.alloy
+      // loggin
       logging {  
         level  = "info"  
         format = "logfmt"  
@@ -98,6 +99,31 @@ alloy:
           url = "http://loki-loki-distributed-gateway.loki/loki/api/v1/push"
         }  
       }
+      // ---- Metrics von PodMonitor und ServiceMonitor
+      prometheus.operator.servicemonitors "sm" {
+         kubernetes_sd_configs = [kubernetes.incluster.discover]
+      }
+      prometheus.operator.podmonitors "pm" {
+         kubernetes_sd_configs = [kubernetes.incluster.discover]
+      }
+
+      prometheus.scrape "k8s" {
+        targets    = concat(sm.targets, pm.targets)
+        scrape_interval = "10s"
+        relabel_configs = [{
+          target_label = "job"
+          replacement  = "k8s-alloy"
+        }]
+
+          forward_to = [prometheus.remote_write.default.receiver]
+      }
+
+      prometheus.remote_write "default" {
+        endpoint {
+          url = "prometheus-operated.monitoring:9090/api/v1/write"
+        }
+      }
+      // otel
 
     # -- Name of existing ConfigMap to use. Used when create is false.
     name: null
