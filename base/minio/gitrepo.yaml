@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: minio-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/minio/operator
+  ref:
+    tag: v7.1.1         # exact tag (or use semver below)
+  # ref:
+  #   semver: "~7.1.x"  # alternative: auto-track 7.1 patch updates
+
