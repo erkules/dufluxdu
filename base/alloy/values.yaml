@@ -111,10 +111,9 @@ alloy:
         targets    = concat(sm.targets, pm.targets)
         scrape_interval = "10s"
         relabel_configs = [{
-          target_label = "job"
-          replacement  = "k8s-alloy"
+          target_label = "job",
+          replacement  = "k8s-alloy",
         }]
-
           forward_to = [prometheus.remote_write.default.receiver]
       }
 
