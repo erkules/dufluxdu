@@ -32,8 +32,8 @@ commonLabels: {}
 ##
 crds:
   enabled: true
-  upgradeJob:
-    enabled: true
+#  upgradeJob:                          #########  TODO
+#    enabled: true
 
 ## custom Rules to override "for" and "severity" in defaultRules
 ##
