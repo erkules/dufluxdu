@@ -100,22 +100,28 @@ alloy:
         }  
       }
       // ---- Metrics von PodMonitor und ServiceMonitor
-      prometheus.operator.servicemonitors "sm" {
-         kubernetes_sd_configs = [kubernetes.incluster.discover]
+      prometheus.operator.servicemonitors "servicemonitor_scrape" {
+          forward_to = [prometheus.remote_write.default.receiver]
+          scrape {
+             default_scrape_interval = "10s" 
+          }
+
       }
-      prometheus.operator.podmonitors "pm" {
-         kubernetes_sd_configs = [kubernetes.incluster.discover]
+      prometheus.operator.podmonitors "podmonitor_scrape" {
+          forward_to = [prometheus.remote_write.default.receiver]
+          scrape {
+             default_scrape_interval = "10s" 
+          }
       }
 
-      prometheus.scrape "k8s" {
-        targets    = concat(sm.targets, pm.targets)
-        scrape_interval = "10s"
-        relabel_configs = [{
-          target_label = "job",
-          replacement  = "k8s-alloy",
-        }]
-          forward_to = [prometheus.remote_write.default.receiver]
-      }
+      //prometheus.scrape "k8s" {
+      //  targets    = concat(sm.targets, pm.targets)
+      //  scrape_interval = "10s"
+      //  relabel_configs = [{
+      //    target_label = "job",
+      //    replacement  = "k8s-alloy",
+      //  }]
+      //}
 
       prometheus.remote_write "default" {
         endpoint {
