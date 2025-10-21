@@ -114,14 +114,18 @@ alloy:
           }
       }
 
-      //prometheus.scrape "k8s" {
+      prometheus.scrape "k8s" {
+          clustering {
+            enabled = true
+          }
       //  targets    = concat(sm.targets, pm.targets)
       //  scrape_interval = "10s"
       //  relabel_configs = [{
       //    target_label = "job",
       //    replacement  = "k8s-alloy",
       //  }]
-      //}
+      }
+
 
       prometheus.remote_write "default" {
         endpoint {
