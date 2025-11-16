@@ -20,6 +20,6 @@ resources:
 - keda-dummy.yaml
 #- security.yaml
 - node-problem-detector.yaml
-- argocd
+#- argocd
 - system-upgrade-controller.yaml
 - system-upgrade-controller-plan.yaml
