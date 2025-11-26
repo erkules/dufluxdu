@@ -27,8 +27,8 @@ loki-promtail/grafana-datasource.yaml
 
 []Grafana braucht nen sidecar welchen configmaps via api synct
 
-[] Storagclass Hetzner-> umbenennen
-[] Storagclass Hetzner-> waitforfirstconsumer weg 
+[x] Storagclass Hetzner-> umbenennen
+[x] Storagclass Hetzner-> waitforfirstconsumer weg 
 [done] system-update-controller plan muss ausgeführt werden
 [] Authentication alloy->loki etc
 [] Mehr SOPS :)
@@ -38,4 +38,25 @@ loki-promtail/grafana-datasource.yaml
 [] fluxupdaten hier
 [] fluxupdaten k8sworkshopo
 [] fluxupdaten CAPI
+[] HelmReleases
+~~~
+upgrade:
+  force: true
+  remmediation:
+    strategy: uninstall
+~~~
+[] HelmReleases/CRDs
+~~~
+install: 
+  crds: CreateReplace
+  remmidiation: 
+    retries: 8000000 (mindestens!!)
+~~~
+
+[] HelmReleases
 [] https://fluxcd.io/flux/components/helm/helmreleases/#drift-detection
+~~~
+spec:
+  driftDetection:
+    mode: enabled
+~~~

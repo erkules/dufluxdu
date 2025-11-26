@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: event-logger
+  namespace: flux-system
+spec:
+  targetNamespace: event-logger
+  install:
+    remediation:
+      retries: 7
+    createNamespace: true
+  interval: 10m
+  releaseName: event-logger
+  chartRef:
+    kind: OCIRepository
+    name: event-logger
+    namespace: flux-system
