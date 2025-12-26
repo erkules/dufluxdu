@@ -13,8 +13,8 @@ spec:
         name: headlamp
       version: 0.39.0
   interval: 1m0s
-  targetNamespace: 0.39.0
-  releaseName: 0.39.0
+  targetNamespace: headlamp
+  releaseName: headlamp
   install:
     remediation:
       retries: 7
