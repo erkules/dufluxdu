@@ -4,7 +4,7 @@
 [] Wir wollen flux mit KSM monitoren
    https://github.com/fluxcd/flux2-monitoring-example/blob/bcae1ef44963da89caabe962a93280c0dfad3381/monitoring/controllers/kube-prometheus-stack/kube-state-metrics-config.yaml#L114-L132
 
-[]certmanager für lokale Certs verwenden
+[x]certmanager für lokale Certs verwenden
 
 
 []sshwifty hat eigentlich auch eine Abhängigkeit zum ngingx. Nur haben wir Abhängigkeiten mit Helmreleases aufgebaut. 
@@ -33,8 +33,11 @@ loki-promtail/grafana-datasource.yaml
 [] Authentication alloy->loki etc
 [] Mehr SOPS :)
 [] Die allow-logging-config sollte in eine eigene externe configmap. Jetze sourcen wir händisch base/alloy/logging.alloy .. schon nervig
-[] Minio ausrollen
+[-] Minio ausrollen
+[] S3-Alternive ausrollen
 [] Loki -> Minio oder OTEL
+[] OTEL
+   [] https://github.com/open-telemetry/opentelemetry-helm-charts/issues/1545
 [] fluxupdaten hier
 [] fluxupdaten k8sworkshopo
 [] fluxupdaten CAPI
@@ -60,3 +63,5 @@ spec:
   driftDetection:
     mode: enabled
 ~~~
+
+[] Oauth-Konzept!!
