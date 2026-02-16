@@ -490,7 +490,8 @@ controller:
       enabled: true
     # -- Annotations to be added to the external controller service. See `controller.service.internal.annotations` for annotations to be added to the internal controller service.
     annotations:
-      load-balancer.hetzner.cloud/location: "fsn1"
+      load-balancer.hetzner.cloud/location: "nbg1"
+    # load-balancer.hetzner.cloud/location: "fsn1"
     # -- Labels to be added to both controller services.
     labels: {}
     # -- Type of the external controller service.
