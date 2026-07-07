@@ -15,7 +15,7 @@ resources:
 - alloy.yaml
 - prometheus-addons.yaml
 - cert-manager
-- sshwifty
+#- sshwifty
 - keda.yaml
 - keda-dummy.yaml
 #- security.yaml
