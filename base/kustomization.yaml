@@ -9,7 +9,7 @@ resources:
 #- contour.yaml
 #- contour-add.yaml
 - prometheus.yaml
-- flux-monitoring.yaml
+#- flux-monitoring.yaml
 - loki.yaml
 #- loki-promtail.yaml
 - alloy.yaml
