@@ -24,4 +24,4 @@ resources:
 - system-upgrade-controller.yaml
 - system-upgrade-controller-plan.yaml
 - headlamp.yaml
-# - event-logger
+- event-logger
