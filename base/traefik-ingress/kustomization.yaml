@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+configMapGenerator:
+  disableNameSuffixHash: true
+- name: traefik-values
+  namespace: flux-system
+  files:
+  - values.yaml=values.yaml
+  #- values.yaml=values.yaml-ds
+# Nicht mehr notwendig
+# Helmcontroller watch selbst die configmap
+# metadata:
+#  labels:
+#    reconcile.fluxcd.io/watch: Enabled
+# Wir müssen nur sicher gehen, dass es immer der gleiche name ist-> disableNameSuffixHash: true
+#configurations:
+#- kustomizeconfig.yaml
+resources:
+- helm-ingress-traefik-repo.yaml
+- helm-ingress-traefik-release.yaml
