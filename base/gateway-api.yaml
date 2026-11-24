@@ -5,8 +5,6 @@ metadata:
   name: gateway-api
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: gateway-api
   path: base/gateway-api
   sourceRef:
     kind: GitRepository
