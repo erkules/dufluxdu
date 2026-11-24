@@ -12,7 +12,7 @@ spec:
       chart: traefik
       sourceRef:
         kind: HelmRepository
-        name: ingress-treafik
+        name: ingress-traefik
       version: "42.4.2"
   interval: 1m0s
   targetNamespace: ingress
