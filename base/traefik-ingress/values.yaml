@@ -13,3 +13,6 @@ gateway:
     web:
       namespacePolicy:
         from: All
+service:
+  annotations:
+    load-balancer.hetzner.cloud/location: "nbg1"

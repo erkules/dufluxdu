@@ -13,3 +13,5 @@ spec:
     name: gitrepo
   interval: 1m
   prune:    true
+  wait:     true
+  timeout: 10m
